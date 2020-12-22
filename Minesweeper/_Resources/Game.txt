@@ -1,0 +1,223 @@
+﻿{
+    "id": "bbd54a9370cf4c35940fc069ba6581df",
+    "start_time": "2020-12-21T14:17:07.909592-03:00",
+    "finish_time": "0001-01-01T00:00:00Z",
+    "status": "GameStatus_Playing",
+    "board": {
+        "row_count": 5,
+        "col_count": 5,
+        "mines_count": 3,
+        "cells": [
+            [
+                {
+                    "type": "CellType_Empty",
+                    "row": 0,
+                    "col": 0,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Empty",
+                    "row": 0,
+                    "col": 1,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Empty",
+                    "row": 0,
+                    "col": 2,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Empty",
+                    "row": 0,
+                    "col": 3,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Empty",
+                    "row": 0,
+                    "col": 4,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                }
+            ],
+            [
+                {
+                    "type": "CellType_Number",
+                    "row": 1,
+                    "col": 0,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": 1
+                },
+                {
+                    "type": "CellType_Number",
+                    "row": 1,
+                    "col": 1,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": 2
+                },
+                {
+                    "type": "CellType_Number",
+                    "row": 1,
+                    "col": 2,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": 3
+                },
+                {
+                    "type": "CellType_Number",
+                    "row": 1,
+                    "col": 3,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": 2
+                },
+                {
+                    "type": "CellType_Number",
+                    "row": 1,
+                    "col": 4,
+                    "is_revealed": true,
+                    "mark": "CellMarkType_None",
+                    "number": 1
+                }
+            ],
+            [
+                {
+                    "type": "CellType_Unknown",
+                    "row": 2,
+                    "col": 0,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 2,
+                    "col": 1,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 2,
+                    "col": 2,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 2,
+                    "col": 3,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 2,
+                    "col": 4,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                }
+            ],
+            [
+                {
+                    "type": "CellType_Unknown",
+                    "row": 3,
+                    "col": 0,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 3,
+                    "col": 1,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 3,
+                    "col": 2,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 3,
+                    "col": 3,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 3,
+                    "col": 4,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                }
+            ],
+            [
+                {
+                    "type": "CellType_Unknown",
+                    "row": 4,
+                    "col": 0,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 4,
+                    "col": 1,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 4,
+                    "col": 2,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 4,
+                    "col": 3,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                },
+                {
+                    "type": "CellType_Unknown",
+                    "row": 4,
+                    "col": 4,
+                    "is_revealed": false,
+                    "mark": "CellMarkType_None",
+                    "number": -1
+                }
+            ]
+        ]
+    }
+}
