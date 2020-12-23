@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:Minesweeper.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ContentControl MouseDown="OnCell_MouseDown">
-    <Border Margin="2" 
+    <ContentControl MouseDown="OnCell_MouseDown" >
+    <Border Margin="1" 
             BorderBrush="Gray" 
             BorderThickness="1" 
             CornerRadius="10" 
             Background="{Binding CellColor, Mode=OneWay}"
             >
         <Viewbox >
-            <Label Background="Transparent" BorderThickness="0" Content="{Binding CellContent, Mode=OneWay}"/>
+            <Label Background="Transparent" BorderThickness="0" Foreground="{Binding TextColor, Mode=OneWay}" Content="{Binding CellContent, Mode=OneWay}"/>
         </Viewbox>
     </Border>
     </ContentControl>

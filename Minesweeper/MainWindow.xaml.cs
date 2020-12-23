@@ -31,17 +31,25 @@ namespace Minesweeper
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private IMinesweeperServices _service;
+        private string _gameTitle;
         private string _userName;
         private string _gameId;
         private bool _isGameEnabled = false;
         private DateTime? _startTime;
         private int? _mines;
+        private int? _minesLeft;
+        private int? _minesFinded;
+        private string _elapsedTime;
+        private GameData _currentGame;
+
+        private const string title = "Minesweeper";
 
 
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
+            this.GameTitle = title;
 
             this.Initialize();
         }
@@ -116,6 +124,19 @@ namespace Minesweeper
             }
         }
 
+        public string GameTitle
+        {
+            get
+            {
+                return _gameTitle;
+            }
+            set
+            {
+                _gameTitle = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
         public string UserName
         {
             get
@@ -126,7 +147,16 @@ namespace Minesweeper
             {
                 _userName = value;
 
-                this.IsGameEnabled = !string.IsNullOrEmpty(value);
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.GameTitle = title;
+                }
+                else
+                {
+                    this.GameTitle = title + " (" + value + ")";
+                }
+
+                this.IsGameMenuEnabled = !string.IsNullOrEmpty(value);
                 this.RaisePropertyChanged();
             }
         }
@@ -144,7 +174,7 @@ namespace Minesweeper
             }
         }
 
-        public bool IsGameEnabled
+        public bool IsGameMenuEnabled
         {
             get
             {
@@ -170,7 +200,7 @@ namespace Minesweeper
             }
         }
 
-        public int? Mines
+        public int? TotalMines
         {
             get
             {
@@ -183,42 +213,134 @@ namespace Minesweeper
             }
         }
 
-        public GameData CurrentGame { get; set; }
-
-        private void LoadNewGame(GameData game)
+        public int? MinesFinded
         {
-            this.CurrentGame = game;
-
-            if (game != null)
+            get
             {
-                this.Mines = game.Board.MinesCount;
-                this.GameId = game.Id;
-
-                if (game.Status == GameStatusType.GameStatus_Created)
-                    this.StartTime = null;
-                else
-                    this.StartTime = game.StartTime;
-
-                this.mainBoard.Load(game.Board);
+                return _minesFinded;
             }
-            else
+            set
             {
-                this.Mines = null;
-                this.StartTime = null;
-                this.GameId = null;
-
-                this.mainBoard.Clear();
+                _minesFinded = value;
+                this.RaisePropertyChanged();
             }
         }
 
-        private void UpdateGame(GameData game)
+        public int? MinesLeft
         {
-            if (game.Status == GameStatusType.GameStatus_Created)
-                this.StartTime = null;
-            else
-                this.StartTime = game.StartTime;
+            get
+            {
+                return _minesLeft;
+            }
+            set
+            {
+                _minesLeft = value;
+                this.RaisePropertyChanged();
+            }
+        }
 
-            this.mainBoard.UpdateBoard(game.Board);
+        public string ElapsedTime
+        {
+            get
+            {
+                return _elapsedTime;
+            }
+            set
+            {
+                _elapsedTime = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public bool IsRestartEnabled { get; set; }
+
+        public GameData CurrentGame
+        {
+            get
+            {
+                return _currentGame;
+            }
+            set
+            {
+                _currentGame = value;
+                this.IsRestartEnabled = this.CurrentGame != null;
+                this.RaisePropertyChanged("IsRestartEnabled");
+            }
+        }
+
+
+
+        private void LoadNewGame(GameData game)
+        {
+            this.StopTimer();
+
+            this.CurrentGame = game;
+
+            this.GameId = null;
+            this.MinesLeft = null;
+            this.MinesFinded = null;
+            this.TotalMines = null;
+            this.StartTime = null;
+            this.GameId = null;
+            this.ElapsedTime = null;
+
+            this.mainBoard.Clear();
+
+            if (game != null)
+            {
+                this.UpdateGame(game, true);
+            }
+        }
+
+        private void UpdateGame(GameData game, bool isNewGame)
+        {
+            if (isNewGame)
+            {
+                this.GameId = game.Id;
+                this.TotalMines = game.Board.MinesCount;
+                this.mainBoard.Load(game.Board);
+
+                if (game.Status == GameStatusType.GameStatus_Playing)
+                {
+                    this.StartTime = game.StartTime;
+                    this.StartTimer();
+                }
+            }
+            else
+            {
+                this.mainBoard.UpdateBoard(game.Board);
+
+                if (this.CurrentGame.Status == GameStatusType.GameStatus_Created && game.Status == GameStatusType.GameStatus_Playing)
+                {
+                    this.StartTime = game.StartTime;
+                    this.StartTimer();
+                }
+            }
+
+            this.MinesFinded = this.mainBoard.MinesFinded;
+            this.MinesLeft = this.mainBoard.MinesLeft;
+
+
+            if (game.Status == GameStatusType.GameStatus_Created)
+            {
+                this.StartTime = null;
+                this.ElapsedTime = null;
+            }
+            else if (game.Status == GameStatusType.GameStatus_Won)
+            {
+                this.StopTimer();
+                this.RefreshTimer();
+                MessageBox.Show("WIN!!", "Game Over", MessageBoxButton.OK, MessageBoxImage.None);
+            }
+            else if (game.Status == GameStatusType.GameStatus_Lost)
+            {
+                this.StopTimer();
+                this.RefreshTimer();
+                MessageBox.Show("LOST!!", "Game Over", MessageBoxButton.OK, MessageBoxImage.None);
+            }
+
+
+            this.CurrentGame = game;
         }
 
         #region -- Menu events --
@@ -239,11 +361,14 @@ namespace Minesweeper
             }
         }
 
-
-
         private void OnResumeGameMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            UserGamesListView view = new UserGamesListView(this.UserName, this.Service);
 
+            if (view.ShowDialog().Value)
+            {
+                this.LoadNewGame(view.SelectedGame);
+            }
         }
 
         private void OnSignInMenuItem_Click(object sender, RoutedEventArgs e)
@@ -284,18 +409,55 @@ namespace Minesweeper
                 }
             }
 
-            this.UpdateGame(game);
+            this.UpdateGame(game, false);
+        }
 
-            if (game.Status == GameStatusType.GameStatus_Won)
+        #endregion
+
+        #region -- Timer --
+
+        System.Threading.Timer timer = null;
+
+        private void StartTimer()
+        {
+            this.StopTimer();
+            timer = new System.Threading.Timer(this.OnTick, null, 1000, 1000);    
+        }
+
+        private void OnTick(object state)
+        {
+            this.RefreshTimer();
+        }
+
+        private void RefreshTimer()
+        {
+            DateTime now = DateTime.Now;
+            if (this.StartTime.HasValue)
             {
-                MessageBox.Show("WIN!!", "Game Over", MessageBoxButton.OK, MessageBoxImage.None);
+                TimeSpan span = now.Subtract(this.StartTime.Value);
+                this.Dispatcher.Invoke(() => {
+                    this.ElapsedTime = span.ToString(@"d\.hh\:mm\:ss");
+                });
             }
-            else if (game.Status == GameStatusType.GameStatus_Lost)
+        }
+
+        private void StopTimer()
+        {
+            var t = timer;
+            if (t != null)
             {
-                MessageBox.Show("LOST!!", "Game Over", MessageBoxButton.OK, MessageBoxImage.None);
+                t.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
             }
         }
 
         #endregion
+
+
+        private void OnRestart_Click(object sender, RoutedEventArgs e)
+        {
+            var game = this.Service.NewGame(this.UserName, this.CurrentGame.Board.RowCount, this.CurrentGame.Board.ColCount, this.CurrentGame.Board.MinesCount);
+            this.LoadNewGame(game);
+        }
+
     }
 }

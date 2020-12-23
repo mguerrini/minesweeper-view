@@ -6,13 +6,13 @@ namespace Minesweeper.Shared
     [Serializable]
     public class BoardData {
         [JsonProperty(PropertyName = "row_count")]
-        public int RowCount;
+        public int RowCount { get; set; }
         [JsonProperty(PropertyName = "col_count")]
-        public int ColCount;
+        public int ColCount { get; set; }
         [JsonProperty(PropertyName = "mines_count")]
-        public int MinesCount;
+        public int MinesCount { get; set; }
         [JsonProperty(PropertyName = "cells")]
-        public CellData[][] Cells;
+        public CellData[][] Cells { get; set; }
 
         public BoardData()
         {

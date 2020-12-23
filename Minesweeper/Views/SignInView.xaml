@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Minesweeper.Views"
         mc:Ignorable="d"
         Title="Sign In" SizeToContent="Height" Width="300" 
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=txtUserName}"
+    >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -18,7 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <Label VerticalAlignment="Center" Grid.Column="0">User Name</Label>
-        <TextBox Grid.Column="1"  Height="25" Margin="10,0"
+        <TextBox x:Name="txtUserName" Grid.Column="1"  Height="25" Margin="10,0" 
                  VerticalAlignment="Center" 
                  VerticalContentAlignment="Center" 
                  HorizontalContentAlignment="Right"

@@ -38,6 +38,8 @@ namespace Minesweeper.Controls
 
         public Brush CellColor { get; set; }
 
+        public Brush TextColor { get; set; }
+
         public void SetModel(CellData model)
         {
             this.Model = model;
@@ -51,12 +53,14 @@ namespace Minesweeper.Controls
                 {
                     case CellType.CellType_Mine:
                         this.CellContent = "M";
+                        this.TextColor = Brushes.Red;
                         break;
                     case CellType.CellType_Empty:
                         this.CellContent = "";
                         break;
                     case CellType.CellType_Number:
                         this.CellContent = model.Number.ToString();
+                        this.TextColor = Brushes.Blue;
                         break;
                     case CellType.CellType_Unknown:
                         this.CellContent = "";
@@ -68,18 +72,20 @@ namespace Minesweeper.Controls
             }
             else
             {
-                this.CellColor = Brushes.LightSlateGray;
+                this.CellColor = Brushes.LightBlue;
 
                 switch (model.Mark)
                 {
                     case CellMarkType.CellMarkType_Flag:
                         this.CellContent = "F";
+                        this.TextColor = Brushes.Red;
                         break;
                     case CellMarkType.CellMarkType_None:
                         this.CellContent = "";
                         break;
                     case CellMarkType.CellMarkType_Question:
                         this.CellContent = "?";
+                        this.TextColor = Brushes.Blue;
                         break;
                     default:
                         this.CellContent = "";
@@ -89,6 +95,7 @@ namespace Minesweeper.Controls
 
             this.RaisePropertyChanged("CellColor");
             this.RaisePropertyChanged("CellContent");
+            this.RaisePropertyChanged("TextColor");
         }
 
 

@@ -19,12 +19,18 @@ namespace Minesweeper.Controls
 
         private CellControl[,] Cells { get; set; }
 
+        public int? MinesLeft { get; internal set; }
+
+        public int? MinesFinded { get; internal set; }
 
         public void Clear()
         {
             this.ColumnDefinitions.Clear();
             this.RowDefinitions.Clear();
             this.Children.Clear();
+            this.MinesLeft = null;
+            this.MinesFinded = null;
+            
 
             if (this.Cells != null)
             {
@@ -81,16 +87,16 @@ namespace Minesweeper.Controls
                     //add to grid
                     Grid.SetRow(cell, r);
                     Grid.SetColumn(cell, c);
-
-                    //set the model
-                    cell.SetModel(board.Cells[r][c]);
                 }
             }
+
+            this.UpdateBoard(board);
         }
 
         public void UpdateBoard(BoardData board)
         {
             this.Board = board;
+            int finded = 0;
 
             for (int r = 0; r<board.RowCount; r++)
             {
@@ -98,8 +104,14 @@ namespace Minesweeper.Controls
                 {
                     CellControl cell = this.Cells[r, c];
                     cell.SetModel(board.Cells[r][c]);
+
+                    if (board.Cells[r][c].Mark == CellMarkType.CellMarkType_Flag)
+                        finded++;
                 }
             }
+
+            this.MinesFinded = finded;
+            this.MinesLeft = board.MinesCount - this.MinesFinded;
         }
 
         private void OnCell_CellClick(object sender, CellClickEventArgs e)

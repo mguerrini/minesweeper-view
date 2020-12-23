@@ -6,25 +6,25 @@
         xmlns:local="clr-namespace:Minesweeper"
         xmlns:controls="clr-namespace:Minesweeper.Controls"
         mc:Ignorable="d"
-        Title="Minesweeper" Height="400" Width="400" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+       Height="500" Title="{Binding GameTitle, Mode=OneWay}" Width="500" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
-
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
         
         <Menu >
             <MenuItem Header="Game" Height="30" >
-                <MenuItem Header="New Game" IsEnabled="{Binding Path=IsGameEnabled, Mode=OneWay}" Click="OnNewGameMenuItem_Click"/>
-                <MenuItem Header="Resume Game" IsEnabled="{Binding Path=IsGameEnabled, Mode=OneWay}" Click="OnResumeGameMenuItem_Click"/>
+                <MenuItem Header="New Game" IsEnabled="{Binding Path=IsGameMenuEnabled, Mode=OneWay}" Click="OnNewGameMenuItem_Click"/>
+                <MenuItem Header="Resume Game" IsEnabled="{Binding Path=IsGameMenuEnabled, Mode=OneWay}" Click="OnResumeGameMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="User" Height="30" >
                 <MenuItem Header="Sign In" Click="OnSignInMenuItem_Click" />
             </MenuItem>
-
         </Menu>
 
         <!-- Header -->
@@ -34,12 +34,16 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width=".3*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width=".3*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" FontWeight="Bold">Start time:</Label>
-                <Label Grid.Column="1" Content="{Binding Path=StartTime, Mode=OneWay}"></Label>
-                <Label Grid.Column="2" FontWeight="Bold">Mines:</Label>
-                <Label Grid.Column="3" Content="{Binding Path=Mines, Mode=OneWay}"></Label>
+                <Label Grid.Column="0" FontWeight="Bold">Elapsed Time:</Label>
+                <Label Grid.Column="1" Content="{Binding Path=ElapsedTime, Mode=OneWay}"></Label>
+                <Label Grid.Column="2" FontWeight="Bold">Mines Left:</Label>
+                <Label Grid.Column="3" Content="{Binding Path=MinesLeft, Mode=OneWay}"></Label>
+                <Label Grid.Column="4" FontWeight="Bold">Mines Finded:</Label>
+                <Label Grid.Column="5" Content="{Binding Path=MinesFinded, Mode=OneWay}"></Label>
             </Grid>
         </Border>
 
@@ -51,17 +55,30 @@
         <!-- Footer -->
         <Border Grid.Row="3" VerticalAlignment="Stretch" BorderThickness="1" BorderBrush="Black">
             <Grid Height="Auto" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width=".3*"/>
+                    <ColumnDefinition Width=".5*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width=".7*"/>
+                    <ColumnDefinition Width=".5*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" FontWeight="Bold">User:</Label>
-                <Label Grid.Column="1" Content="{Binding Path=UserName}"></Label>
-                <Label Grid.Column="2" FontWeight="Bold">Game Id:</Label>
-                <Label Grid.Column="3" Content="{Binding Path=GameId, Mode=OneWay}"></Label>
+                <Label Grid.Column="0" FontWeight="Bold">Start time:</Label>
+                <Label Grid.Column="1" Content="{Binding Path=StartTime, Mode=OneWay}"></Label>
+                <Label Grid.Column="2" FontWeight="Bold">Total Mines:</Label>
+                <Label Grid.Column="3" Content="{Binding Path=TotalMines, Mode=OneWay}"></Label>
+
+<!--
+                <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold">User:</Label>
+                <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=UserName}"></Label>
+                <Label Grid.Column="2" Grid.Row="1" FontWeight="Bold">Game Id:</Label>
+                <Label Grid.Column="3" Grid.Row="1" Content="{Binding Path=GameId, Mode=OneWay}"></Label>
+                -->
             </Grid>
         </Border>
+
+        <Button Grid.Row="4" Margin="10,5" Height="20" IsEnabled="{Binding IsRestartEnabled, Mode=OneWay}"  Click="OnRestart_Click">Restart</Button>
     </Grid>
 </Window>

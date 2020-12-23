@@ -73,6 +73,8 @@
     <Compile Include="Controls\CellControl.xaml.cs">
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DateToStringConverter.cs" />
+    <Compile Include="Converters\EnumToStringConverter.cs" />
     <Compile Include="Core\ComponentConfiguration.cs" />
     <Compile Include="Core\ComponentConfigurationBase.cs" />
     <Compile Include="Core\ComponentConfigurationSection.cs" />
