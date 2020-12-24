@@ -57,7 +57,13 @@ namespace Minesweeper
         private void Initialize()
         {
             this.Configuration = ConfigurationProvider.Instance.GetConfiguration<MinesweeperConfiguration>();
+            this.Unloaded += MainWindow_Unloaded;
             this.mainBoard.CellClick += OnCell_Click;
+        }
+
+        private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.StopTimer();
         }
 
 
@@ -379,6 +385,7 @@ namespace Minesweeper
             if (b.Value)
             {
                 this.UserName = view.UserName;
+                this.LoadNewGame(null);
             }
         }
 

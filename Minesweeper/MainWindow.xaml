@@ -48,7 +48,7 @@
         </Border>
 
         <!-- Board -->
-        <Border Grid.Row="2" VerticalAlignment="Stretch" BorderThickness="1" BorderBrush="Black">
+        <Border Grid.Row="2" VerticalAlignment="Stretch" BorderThickness="1,0" BorderBrush="Black" Padding="5">
             <controls:BoardControl x:Name="mainBoard" />
         </Border>
 
